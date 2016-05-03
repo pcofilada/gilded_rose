@@ -7,7 +7,7 @@ describe GildedRose do
       items = []
       items << Item.new('Regular Item', 10, 30)
       items << Item.new('Aged Brie', 5, 40)
-      items << Item.new('Sulfuras, Hand of Ragnaros', 50, 50)
+      items << Item.new('Sulfuras, Hand of Ragnaros', 50, 80)
       items << Item.new('Backstage passes to a TAFKAL80ETC concert', 15, 20)
       items << Item.new('Conjured', 25, 15)
       gilded_rose = GildedRose.new(items)
@@ -33,7 +33,7 @@ describe GildedRose do
       end
 
       it 'degrades quality twice as fast if sell date has passed' do
-        @items << Item.new('Regular Item 2', 0, 30)
+        @items << Item.new('Regular Item 2', -1, 30)
         @gilded_rose = GildedRose.new(@items)
         expect{@gilded_rose.update_quality}.to change{@items.last.quality}.from(30).to(28)
       end
@@ -68,7 +68,7 @@ describe GildedRose do
     context 'Sulfuras, Hand of Ragnaros' do
       before(:each) do
         @items = []
-        @items << Item.new('Sulfuras, Hand of Ragnaros', 50, 50)
+        @items << Item.new('Sulfuras, Hand of Ragnaros', 50, 80)
         @gilded_rose = GildedRose.new(@items)
       end
 
@@ -93,7 +93,7 @@ describe GildedRose do
       end
 
       it 'sets quality to 0 after the concert' do
-        @items << Item.new('Backstage passes to a TAFKAL80ETC concert', 0, 20)
+        @items << Item.new('Backstage passes to a TAFKAL80ETC concert', -1, 20)
         @gilded_rose = GildedRose.new(@items)
         @gilded_rose.update_quality
         expect(@items.last.quality).to eq(0)
@@ -138,7 +138,7 @@ describe GildedRose do
       end
 
       it 'degrades quality twice as fast if sell date has passed' do
-        @items << Item.new('Conjured', 0, 15)
+        @items << Item.new('Conjured', -1, 15)
         @gilded_rose = GildedRose.new(@items)
         expect{@gilded_rose.update_quality}.to change{@items.last.quality}.from(15).to(11)
       end
